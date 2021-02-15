@@ -1,0 +1,17 @@
+
+{'_interested_conf_list': ['model', 'aug_mode', 'train_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'cl_mode', 'nce_k', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '02_15-17_23_00', 'cl_mode': 'WL_0_0_1', 'clip_norm': 1.0, 'dataset': 'freebase', 'exp_name': 'NCEK', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['mam', 'mdm', 'mwm'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 8192, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 100, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 0, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 1.9916905164718628, 'test_mif1': 0.6097046136856079}
+
+{'_interested_conf_list': ['model', 'aug_mode', 'train_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'cl_mode', 'nce_k', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '02_15-17_41_45', 'cl_mode': 'WL_0_0_1', 'clip_norm': 1.0, 'dataset': 'freebase', 'exp_name': 'NCEK', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['mam', 'mdm', 'mwm'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 8192, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 100, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 1, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 1.937422752380371, 'test_mif1': 0.6033755540847778}
+
+{'_interested_conf_list': ['model', 'aug_mode', 'train_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'cl_mode', 'nce_k', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '02_15-18_00_06', 'cl_mode': 'WL_0_0_1', 'clip_norm': 1.0, 'dataset': 'freebase', 'exp_name': 'NCEK', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['mam', 'mdm', 'mwm'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 8192, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 100, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 2, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 1.9982023239135742, 'test_mif1': 0.6130198836326599}
+
+
+##########AVG RESULTS##########
+loss: 1.9758 (0.0334)
+test_mif1: 60.8700 (0.4900)
+###############################
+{'avg_loss': '1.98', 'avg_test_mif1': '60.87'}
+{'std_loss': '0.03', 'std_test_mif1': '0.49'}
