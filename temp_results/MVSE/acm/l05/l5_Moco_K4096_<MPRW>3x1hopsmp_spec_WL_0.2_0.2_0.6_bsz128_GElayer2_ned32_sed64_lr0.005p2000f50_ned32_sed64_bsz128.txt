@@ -1,0 +1,17 @@
+
+{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_36_17', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 2000, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 0, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 1, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.22639094293117523, 'test_mif1': 0.8769606351852417}
+
+{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_37_18', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 2000, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 1, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 1, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.2850944697856903, 'test_mif1': 0.8727779984474182}
+
+{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_38_15', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 2000, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 2, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 1, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.23582448065280914, 'test_mif1': 0.8849773406982422}
+
+
+##########AVG RESULTS##########
+loss: 0.2491 (0.0315)
+test_mif1: 87.8239 (0.6199)
+###############################
+{'avg_loss': '0.25', 'avg_test_mif1': '87.82'}
+{'std_loss': '0.03', 'std_test_mif1': '0.62'}
