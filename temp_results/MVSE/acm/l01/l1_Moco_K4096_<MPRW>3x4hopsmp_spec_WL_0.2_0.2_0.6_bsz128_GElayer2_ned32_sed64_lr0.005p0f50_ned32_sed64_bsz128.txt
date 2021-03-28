@@ -1,17 +1,27 @@
 
-{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_34_05', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 0, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
-{'loss': 0.340862900018692, 'test_mif1': 0.8555184006690979}
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'walk_hop', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_27-21_43_06', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 0, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.340862900018692, 'test_maf1': 0.8557377457618713, 'test_mif1': 0.8555184006690979}
 
-{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_34_38', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 1, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
-{'loss': 0.31533148884773254, 'test_mif1': 0.8668896555900574}
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'walk_hop', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_27-21_43_48', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 1, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.43266886472702026, 'test_maf1': 0.8367480635643005, 'test_mif1': 0.8377926349639893}
 
-{'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_26-12_35_11', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 2, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
-{'loss': 0.41916680335998535, 'test_mif1': 0.8337792754173279}
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'walk_hop', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_27-21_44_28', 'cl_mode': 'WL_0.2_0.2_0.6', 'clip_norm': 1.0, 'dataset': 'acm', 'exp_name': 'WH', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['pap', 'psp'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 0, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 2, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 4, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.5628941059112549, 'test_maf1': 0.8114630579948425, 'test_mif1': 0.8147157430648804}
 
 
 ##########AVG RESULTS##########
-loss: 0.3585 (0.0541)
-test_mif1: 85.2062 (1.6824)
+loss: 0.4455 (0.1116)
+test_maf1: 83.4650 (2.2212)
+test_mif1: 83.6009 (2.0460)
 ###############################
-{'avg_loss': '0.36', 'avg_test_mif1': '85.21'}
-{'std_loss': '0.05', 'std_test_mif1': '1.68'}
+{'avg_loss': '0.45', 'avg_test_maf1': '83.46', 'avg_test_mif1': '83.60'}
+{'std_loss': '0.11', 'std_test_maf1': '2.22', 'std_test_mif1': '2.05'}
+
+
+##########AVG RESULTS##########
+loss: 0.4455 (0.1116)
+test_maf1: 83.4650 (2.2212)
+test_mif1: 83.6009 (2.0460)
+###############################
+{'avg_loss': '0.45', 'avg_test_maf1': '83.46', 'avg_test_mif1': '83.60'}
+{'std_loss': '0.11', 'std_test_maf1': '2.22', 'std_test_mif1': '2.05'}

@@ -1,0 +1,18 @@
+
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'cl_mode', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_28-01_25_48', 'cl_mode': 'WL_0.3_0.3_0.4', 'clip_norm': 1.0, 'dataset': 'dblp', 'exp_name': 'WL', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['apa', 'apcpa'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 200, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 0, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.35236573219299316, 'test_maf1': 0.8952397704124451, 'test_mif1': 0.9004064798355103}
+
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'cl_mode', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_28-01_26_58', 'cl_mode': 'WL_0.3_0.3_0.4', 'clip_norm': 1.0, 'dataset': 'dblp', 'exp_name': 'WL', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['apa', 'apcpa'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 200, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 1, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.33019599318504333, 'test_maf1': 0.899640679359436, 'test_mif1': 0.90625}
+
+{'_interested_conf_list': ['model', 'aug_mode', 'dataset', 'exp_name', 'batch_size', 'train_percentage', 'p_epoch', 'f_epoch', 'ge_mode', 'skip_pretrain', 'model', 'config', 'cl_mode', 'seed', 'mode'], 'alpha': 0.999, 'aug_mode': 'MPRW', 'batch_size': 128, 'beta1': 0.9, 'beta2': 0.999, 'birth_time': '03_28-01_28_08', 'cl_mode': 'WL_0.3_0.3_0.4', 'clip_norm': 1.0, 'dataset': 'dblp', 'exp_name': 'WL', 'f_epoch': 50, 'ge_layer': 2, 'ge_mode': 'mp_spec', 'gnn_model': 'gin', 'lr': 0.005, 'model': 'MVSE', 'mp_list': ['apa', 'apcpa'], 'mv_hidden_size': 48, 'mv_map_layer': 2, 'nce_k': 4096, 'nce_t': 0.07, 'node_emb_dim': 32, 'norm': True, 'num_samples': 2000, 'num_workers': 1, 'p_epoch': 200, 'positional_embedding_size': 32, 'restart_prob': 0.2, 'seed': 2, 'subg_emb_dim': 64, 'subgraph_size': 128, 'train_mode': 'moco', 'walk_hop': 2, 'walk_num': 3, 'weight_decay': 1e-05}
+{'loss': 0.352445125579834, 'test_maf1': 0.8888425827026367, 'test_mif1': 0.8945630192756653}
+
+
+##########AVG RESULTS##########
+loss: 0.3450 (0.0128)
+test_maf1: 89.4574 (0.5430)
+test_mif1: 90.0406 (0.5843)
+###############################
+{'avg_loss': '0.35', 'avg_test_maf1': '89.46', 'avg_test_mif1': '90.04'}
+{'std_loss': '0.01', 'std_test_maf1': '0.54', 'std_test_mif1': '0.58'}
