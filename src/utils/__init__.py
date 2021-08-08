@@ -6,9 +6,12 @@ root_path = cur_path.split('src')[0]
 os.chdir(root_path)
 sys.path.append(root_path + 'src')
 
-from .early_stopper import EarlyStopping
+# ! IMPORTANT NOTES
+# ! These functions shan't use cuda related packages, since it will cause wrong assignment of GPU-ID
 from .util_funcs import exp_init, time_logger, print_log, is_runing_on_local
-from .proj_settings import P_EPOCHS_SAVE_LIST, DEFAULT_SETTING
+from .proj_settings import *
 from .conf_utils import SimpleObject
+from .tune_utils import Tuner, tuner_from_argparse_args, summarize_by_folder
+
 import argparse
 from time import time

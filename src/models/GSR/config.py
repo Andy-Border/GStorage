@@ -9,6 +9,7 @@ class GSRConfig(ModelConfig):
         # ! Model settings
         self.dataset = args.dataset
         self.gnn_model = 'SGC'
+        self.gnn_model = 'GCN'
         # self.activation = 'Elu'
         self.activation = 'Relu'
 
@@ -36,7 +37,7 @@ class GSRConfig(ModelConfig):
         self.pre_dropout = 0
 
         # ! Graph Refinement Settings
-        self.cos_batch_size = 1000 if self.dataset == 'arxiv' else 10000
+        self.cos_batch_size = 2000 if self.dataset == 'arxiv' else 10000
 
         # self.fsim_norm = False  #
         self.fsim_norm = True
@@ -63,19 +64,16 @@ class GSRConfig(ModelConfig):
     def pretrain_conf(self):
 
         if self.gnn_model == 'GAT':
-            self.in_head = 8
-            self.prt_out_head = 8
-            self.gat_hidden = 8
+            if self.dataset != 'arxiv':
+                self.in_head = 8
+                self.gat_hidden = 8
+            else:
+                self.in_head = 3
+                self.gat_hidden = 250
+                self.input_dropout = 0.1
 
         if self.gnn_model == 'GraphSage':
             self.aggregator = 'gcn'
-
-        if self.gnn_model == 'SGC':
-            self.k = 2
-
-        if self.gnn_model == 'GCNII':
-            self.alpha = 0.2
-            self.lda = 1.0
 
         if self.semb == 'dw':
             return f"_lr{self.prt_lr}_bsz{self.p_batch_size}_pi{self.p_epochs}_enc{self.gnn_model}_dec-l{self.decoder_layer}_hidden{self.decoder_n_hidden}-prt_intra_w-{self.intra_weight}_ncek{self.nce_k}_fanout{self.fan_out}_prdo{self.pre_dropout}_act_{self.activation}_d{self.n_hidden}_pss{self.p_schedule_step}"

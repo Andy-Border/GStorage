@@ -14,7 +14,7 @@ from utils.data_utils import *
 import numpy as np
 from utils.util_funcs import init_random_state
 from copy import deepcopy
-
+import dgl
 
 #
 class GSR_pretrain(nn.Module):
@@ -51,10 +51,6 @@ class GSR_pretrain(nn.Module):
             return TwoLayerGAT(input_dim, cf.gat_hidden, cf.gat_hidden, cf.in_head, cf.prt_out_head, cf.activation, cf.pre_dropout, cf.pre_dropout,  is_out_layer=True)
         if cf.gnn_model == 'GraphSage':
             return TwoLayerGraphSage(input_dim, cf.n_hidden, cf.n_hidden, cf.aggregator, cf.activation, cf.pre_dropout, is_out_layer=True)
-        if cf.gnn_model == 'SGC':
-            return OneLayerSGC(input_dim, cf.n_hidden, k=cf.k, is_out_layer=True)
-        if cf.gnn_model == 'GCNII':
-            return TwoLayerGCNII(input_dim, cf.n_hidden, cf.n_hidden, cf.activation, cf.pre_dropout, cf.alpha, cf.lda, is_out_layer=True)
 
     def forward(self, edge_subgraph, blocks, input, mode='q'):
         def _get_emb(x):
@@ -83,7 +79,7 @@ class GSR_pretrain(nn.Module):
         edges = set(graph_edge_to_lot(g))
         rm_num, add_num = [int(float(_) * self.g.num_edges())
                            for _ in (self.rm_ratio, self.add_ratio)]
-        batched_implementation = False
+        batched_implementation = True
         if batched_implementation:
             # if not self.fsim_norm or self.dataset in ['arxiv']:
             if self.device != th.device('cpu'):
@@ -137,21 +133,13 @@ class GSR_finetune(nn.Module):
                 self.gnn = TwoLayerGAT(cf.n_feat, cf.gat_hidden, cf.n_class, cf.in_head, 1, cf.activation, cf.dropout, cf.dropout, is_out_layer=True)
             if cf.gnn_model == 'GraphSage':
                 self.gnn = TwoLayerGraphSage(cf.n_feat, cf.n_hidden, cf.n_class, cf.aggregator, cf.activation, cf.dropout, is_out_layer=True)
-            if cf.gnn_model == 'SGC':
-                self.gmm_model = OneLayerSGC(cf.n_feat, cf.n_class, k=cf.k, is_out_layer=True)
-            if cf.gnn_model == 'GCNII':
-                self.gnn = TwoLayerGCNII(cf.n_feat, cf.n_hidden, cf.n_class, cf.activation, cf.dropout, cf.alpha, cf.lda,  is_out_layer=True)
         else:
             if cf.gnn_model == 'GCN':
                 self.gnn = ThreeLayerGCN_BN(cf.n_feat, cf.n_hidden, cf.n_class, cf.activation, cf.dropout)
             if cf.gnn_model == 'GAT':
-                raise NotImplementedError
+                self.gnn = ThreeLayerGAT_BN(cf.n_feat, cf.gat_hidden, cf.n_class, cf.in_head, 1, cf.activation, cf.input_dropout, cf.dropout)
             if cf.gnn_model == 'GraphSage':
-                raise NotImplementedError
-            if cf.gnn_model == 'SGC':
-                raise NotImplementedError
-            if cf.gnn_model == 'GCNII':
-                raise NotImplementedError
+                self.gnn = ThreeLayerGraphSage_BN(cf.n_feat, cf.n_hidden, cf.n_class, cf.activation, cf.dropout, cf.aggregator)
 
 
     def forward(self, g, x):
@@ -247,30 +235,67 @@ class TwoLayerGAT(nn.Module):
         super().__init__()
         # Fixme: Deal zero degree
         heads = [in_head, out_head]
-        self.activation = F.elu_ if activation == 'Elu' else F.relu
-        self.conv1 = GATConv(in_features, hidden_features, heads[0], feat_drop, attn_drop, negative_slope, residual=residual, activation=self.activation,  allow_zero_in_degree=True)
-        self.conv2 = GATConv(hidden_features*heads[0], out_features, heads[-1], feat_drop, attn_drop, negative_slope, residual=residual, activation=None, allow_zero_in_degree=True)
+        self.conv1 = GATConv(in_features, hidden_features, heads[0], residual=residual,  allow_zero_in_degree=True)
+        self.conv2 = GATConv(hidden_features*heads[0], out_features, heads[-1], residual=residual, allow_zero_in_degree=True)
         self.is_out_layer = is_out_layer
+        self.activation = F.elu_ if activation == 'Elu' else F.relu
+        self.input_dropout = nn.Dropout(p=feat_drop)
+        self.dropout = nn.Dropout(p=attn_drop)
 
 
     def _stochastic_forward(self, blocks, x):
+        x = self.input_dropout(x)
         x = self.conv1(blocks[0], x).flatten(1)
         if self.is_out_layer:  # Last layer, no activation and dropout
             x = self.conv2(blocks[1], x).flatten(1)
         else:  # Middle layer, activate and dropout
-            x = self.conv2(blocks[1], x).flatten(1)
+            x = self.activation(self.conv2(blocks[1], x).flatten(1))
+            x = self.dropout(x)
         return x
 
     def forward(self, g, x, stochastic=False):
         if stochastic:  # Batch forward
             return self._stochastic_forward(g, x)
         else:  # Normal forward
+            x = self.input_dropout(x)
             x = self.conv1(g, x).flatten(1)
             if self.is_out_layer:  # Last layer, no activation and dropout
                 x = self.conv2(g, x).flatten(1)
             else:  # Middle layer, activate and dropout
-                x = self.conv2(g, x).flatten(1)
+                x = self.activation(self.conv2(g, x).flatten(1))
+                x = self.dropout(x)
             return x
+
+
+
+class ThreeLayerGAT_BN(nn.Module):
+    def __init__(self, in_features, hidden_features, out_features, in_head, out_head, activation,
+                 feat_drop=0.6, attn_drop=0.6, negative_slope=0.2, residual=False):
+        super().__init__()
+        # Fixme: Deal zero degree
+        heads = [in_head, in_head, out_head]
+        self.conv1 = GATConv(in_features, hidden_features, heads[0], residual=residual, allow_zero_in_degree=True)
+        self.conv2 = GATConv(hidden_features*heads[0], hidden_features, heads[1], residual=residual, allow_zero_in_degree=True)
+        self.conv3 = GATConv(hidden_features*heads[1], out_features, heads[-1], residual=residual, allow_zero_in_degree=True)
+        self.bn1 = torch.nn.BatchNorm1d(hidden_features*in_head)
+        self.bn2 = torch.nn.BatchNorm1d(hidden_features*in_head)
+        self.input_drop = nn.Dropout(feat_drop)
+        self.dropout = nn.Dropout(attn_drop)
+        self.activation = F.elu_ if activation == 'Elu' else F.relu
+
+
+    def forward(self, g, x):
+
+        x = self.input_drop(x)
+        x = self.conv1(g, x).flatten(1)
+        x = self.bn1(x)
+        x = self.dropout(self.activation(x))
+        x = self.conv2(g, x).flatten(1)
+        x = self.bn2(x)
+        x = self.dropout(self.activation(x))
+        x = self.conv3(g, x).mean(1)
+        return x
+
 
 
 class TwoLayerGraphSage(nn.Module):
@@ -309,51 +334,32 @@ class TwoLayerGraphSage(nn.Module):
             return x
 
 
-class TwoLayerGCNII(nn.Module):
-    def __init__(self, in_features, hidden_features, out_features, activation, dropout=0.5, alpha=0.2, lda=1.0, is_out_layer=True):
+class ThreeLayerGraphSage_BN(nn.Module):
+    def __init__(self,
+                 in_features,
+                 hidden_features,
+                 out_features,
+                 activation,
+                 dropout,
+                 aggregator):
         super().__init__()
-        # Fixme: Deal zero degree
-        self.fc1 = nn.Linear(in_features, hidden_features)
-        self.fc2 = nn.Linear(hidden_features, out_features)
-        self.conv1 = GCN2Conv(hidden_features, layer=1, alpha=alpha, lambda_=lda, project_initial_features=True, allow_zero_in_degree=True)
-        self.conv2 = GCN2Conv(hidden_features, layer=2, alpha=alpha, lambda_=lda, project_initial_features=True, allow_zero_in_degree=True)
+
+        self.conv1 = SAGEConv(in_features, hidden_features, aggregator)
+        self.conv2 = SAGEConv(hidden_features, hidden_features, aggregator)
+        self.conv3 = SAGEConv(hidden_features, out_features, aggregator)
         self.dropout = nn.Dropout(p=dropout)
-        self.is_out_layer = is_out_layer
+        self.bn1 = torch.nn.BatchNorm1d(hidden_features)
+        self.bn2 = torch.nn.BatchNorm1d(hidden_features)
         self.activation = F.elu_ if activation == 'Elu' else F.relu
 
-
-    def _stochastic_forward(self, blocks, feat):
-        feat = self.activation(self.fc1(feat))
-        x = feat
-        x = self.activation(self.conv1(blocks[0], x, feat))
+    def forward(self, g, x):
+        x = self.activation(self.bn1(self.conv1(g, x)))
         x = self.dropout(x)
-        if self.is_out_layer:  # Last layer, no activation and dropout
-            x = self.conv2(blocks[1], x, feat)
-            x = self.fc2(x)
-        else:  # Middle layer, activate and dropout
-            x = self.activation(self.conv2(blocks[1], x, feat))
-            x = self.dropout(x)
-            x = self.fc2(x)
-            x = self.dropout(x)
+        x = self.activation(self.bn2(self.conv2(g, x)))
+        x = self.dropout(x)
+        x = self.conv3(g, x)
         return x
 
-    def forward(self, g, feat, stochastic=False):
-        if stochastic:  # Batch forward
-            return self._stochastic_forward(g, feat)
-        else:  # Normal forward
-            feat = self.activation(self.fc1(feat))
-            x = feat
-            x = self.activation(self.conv1(g, x, feat))
-            x = self.dropout(x)
-            if self.is_out_layer:  # Last layer, no activation and dropout
-                x = self.conv2(g, x, feat)
-                x = self.fc2(x)
-            else:  # Middle layer, activate and dropout
-                x = self.activation(self.conv2(g, x, feat))
-                x = self.dropout(x)
-                x = self.fc2(x)
-                x = self.dropout(x)
-            return x
 
 
 class OneLayerSGC(nn.Module):

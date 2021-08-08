@@ -1,12 +1,12 @@
 from abc import abstractmethod, ABCMeta
-from utils.util_funcs import exp_init, time_logger, print_log, get_ip
+from utils.util_funcs import exp_init, time_logger, print_log
 from time import time
 import torch as th
 from utils.evaluation import eval_logits, eval_classification
 from utils.evaluation import eval_logits, save_results
 from models.GSR.data_utils import get_stochastic_loader
 from ogb.nodeproppred import Evaluator
-
+# Copyright
 
 class NodeClassificationTrainer(metaclass=ABCMeta):
     def __init__(self, model, g, features, optimizer, stopper, loss_func, sup, cf):

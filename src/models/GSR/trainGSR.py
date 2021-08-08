@@ -2,6 +2,7 @@ import os.path as osp
 import sys
 
 sys.path.append((osp.abspath(osp.dirname(__file__)).split('src')[0] + 'src'))
+import os
 
 from utils import *
 
@@ -16,9 +17,15 @@ def train_GSR(args):
     import torch as th
     import dgl
     from utils.data_utils import preprocess_data
-    from models.GSR import GSR_pretrain, GSR_finetune, para_copy, GSRConfig, \
-        get_pretrain_loader, get_structural_feature, \
-        MemoryMoCo, moment_update, NCESoftmaxLoss, FullBatchTrainer
+    from utils.early_stopper import EarlyStopping
+
+    from models.GSR.GSR import GSR_pretrain, GSR_finetune, para_copy
+    from models.GSR.config import GSRConfig
+    from models.GSR.data_utils import get_pretrain_loader, get_structural_feature
+    from models.GSR.cl_utils import MemoryMoCo, moment_update, NCESoftmaxLoss
+    from models.GSR.trainer import FullBatchTrainer
+    from models.GSR.trainGSR import train_GSR
+    from models.GSR.PolyLRDecay import PolynomialLRDecay
 
     # ! Config
     cf = GSRConfig(args)
@@ -30,16 +37,15 @@ def train_GSR(args):
     feat = {'F': features, 'S': get_structural_feature(g, cf)}
     cf.feat_dim = {v: feat.shape[1] for v, feat in feat.items()}
     supervision = SimpleObject({'train_x': train_x, 'val_x': val_x, 'test_x': test_x, 'labels': labels})
-
     # ! Train Init
     print(f'{cf}\nStart training..')
     p_model = GSR_pretrain(g, cf).to(cf.device)
-    print(p_model)
-
+    # print(p_model)
     # ! Train Phase 1: Pretrain
     if cf.p_epochs > 0:
         # os.remove(cf.pretrain_model_ckpt)  # Debug Only
         if os.path.exists(cf.pretrain_model_ckpt):
+
             p_model.load_state_dict(th.load(cf.pretrain_model_ckpt, map_location=cf.device))
             print(f'Pretrain embedding loaded from {cf.pretrain_model_ckpt}')
         else:
@@ -47,6 +53,9 @@ def train_GSR(args):
             views = ['F', 'S']
             optimizer = th.optim.Adam(
                 p_model.parameters(), lr=cf.prt_lr, weight_decay=cf.weight_decay)
+            if cf.p_schedule_step > 1:
+                scheduler_poly_lr_decay = PolynomialLRDecay(optimizer, max_decay_steps=cf.p_schedule_step,
+                                                            end_learning_rate=0.0001, power=2.0)
             # Construct virtual relation triples
             p_model_ema = GSR_pretrain(g, cf).to(cf.device)
             moment_update(p_model, p_model_ema, 0)  # Copy
@@ -105,6 +114,10 @@ def train_GSR(args):
                     print_log({'Epoch': epoch_id, 'Batch': step, 'Time': time() - t0,
                                'intra_loss': intra_loss.item(), 'inter_loss': inter_loss.item(),
                                'overall_loss': loss.item()})
+
+                    if cf.p_schedule_step > 1:
+                        scheduler_poly_lr_decay.step()
+
                 epochs_to_save = P_EPOCHS_SAVE_LIST + ([1, 2, 3, 4] if args.dataset == 'arxiv' else [])
                 if epoch_id + 1 in epochs_to_save:
                     # Convert from p_epochs to current p_epoch checkpoint
@@ -145,49 +158,26 @@ def train_GSR(args):
                            stopper=stopper, optimizer=optimizer, loss_func=th.nn.CrossEntropyLoss())
     trainer.run()
     trainer.eval_and_save()
-
     return cf
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Training settings")
-    dataset = 'pubmed'
-    dataset = 'citeseer'
-    dataset = 'arxiv'
-    dataset = 'flickr'
-    dataset = 'blogcatalog'
+    # dataset = 'citeseer'
+    # dataset = 'arxiv'
     dataset = 'cora'
-    # ! Exp Settings
+    # ! Settings
     parser.add_argument("-g", "--gpu", default=1, type=int, help="GPU id to use.")
     parser.add_argument("-d", "--dataset", type=str, default=dataset)
-    parser.add_argument("-t", "--train_percentage", default=-1, type=int)
+    parser.add_argument("-t", "--train_percentage", default=0, type=int)
     parser.add_argument("-e", "--early_stop", default=100, type=int)
-    parser.add_argument('-l', '--load_default_config', action='store_true',
-                        help='Whether load default config or use parsed config')
+    parser.add_argument("--epochs", default=1000, type=int)
     parser.add_argument("--seed", default=0)
-
-    # ! Model Settings
-    # Note that model settings will be overwritten by default setting with "-l" option
-    parser.add_argument("--epochs", default=1000, type=float)
-    parser.add_argument("--intra_weight", default=0.5, type=float)
-    parser.add_argument("--fsim_weight", default=0.25, type=float)
-    parser.add_argument("--fan_out", default='20_40', type=str)
-    parser.add_argument("--add_ratio", default=0.5, type=float)
-    parser.add_argument("--rm_ratio", default=0, type=float)
-    parser.add_argument("--p_epochs", default=50, type=int)
-    parser.add_argument("--p_batch_size", default=512, type=int)
-    parser.add_argument("--prt_lr", default=0.005, type=float)
-    parser.add_argument("--activation", default='Relu', type=str)
     args = parser.parse_args()
-
-    if is_runing_on_local():
-        args.gpu = -1
-        args.dataset = args.dataset if args.dataset != 'arxiv' else 'cora'
-    # args.load_default_config = True
-    if args.load_default_config:
-        print('Please note that, the model settings are overwritten by default setting with "-l" option')
-        for var_name, var_val_dict in DEFAULT_SETTING.items():
-            args.__dict__[var_name] = var_val_dict[args.dataset]
+    #
+    # if '192.168.0' in get_ip():
+    #     args.gpu = -1
+    #     args.dataset = args.dataset if args.dataset != 'arxiv' else 'cora'
     # ! Train
     train_GSR(args)
 

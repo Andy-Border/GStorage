@@ -9,6 +9,7 @@ import ast
 from itertools import product
 from pprint import pformat
 import traceback
+import argparse
 
 
 class Tuner():
@@ -24,9 +25,11 @@ class Tuner():
         self.birth_time = get_cur_time(t_format='%m_%d-%H_%M_%S')
         self.__dict__.update(exp_args.__dict__)
         self._d = deepcopy(default_dict) if default_dict is not None else {}
-        self._d.update(search_dict)
         if 'data_spec_configs' in search_dict:
             self.update_data_specific_cand_dict(search_dict['data_spec_configs'])
+        search_dict.pop('data_spec_configs', None)
+
+        self._d.update(search_dict)
 
     def update_data_specific_cand_dict(self, cand_dict):
         for k, v in cand_dict.items():
@@ -107,10 +110,10 @@ class Tuner():
                     failed_trials += 1
                     continue
                 calc_mean_std(cf.res_file)
-        print(f'\n\n{"="*24+" Grid Search Finished "+"="*24}\n'
+        print(f'\n\n{"=" * 24 + " Grid Search Finished " + "=" * 24}\n'
               f'Successfully run {finished_trials} trials, skipped {skipped_trials} previous trials,'
               f'failed {failed_trials} trials.')
-        if failed_trials>0: print(f'Check {log_file} for bug reports.\n{"="*70}\n')
+        if failed_trials > 0: print(f'Check {log_file} for bug reports.\n{"=" * 70}\n')
 
     # * ============================= Results Processing =============================
 
@@ -139,6 +142,27 @@ class Tuner():
             if os.path.exists(res_file):
                 res_f_list.append(res_file)
         return res_f_list
+
+
+def tuner_from_argparse_args(model, config, train_func, exp_dict,
+                             dataset='cora', train_percentage=0,
+                             run_times=3, exp_name='RoughTuneGCN'):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--dataset', type=str, default=dataset)
+    parser.add_argument('-t', '--train_percentage', type=int, default=train_percentage)
+    parser.add_argument('-r', '--run_times', type=int, default=run_times)
+    parser.add_argument('-e', '--exp_name', type=str, default=exp_name)
+    parser.add_argument('-s', '--start_ind', type=int, default=0)
+    parser.add_argument('-g', '--gpu', type=int, default=1)
+    parser.add_argument('-v', '--reverse_iter', action='store_true', help='reverse iter or not')
+    parser.add_argument('-b', '--log_on', action='store_true', help='show log or not')
+    args = parser.parse_args()
+    if is_runing_on_local(): args.gpu = -1
+
+    exp_init(seed=0, gpu_id=args.gpu)
+    args.__dict__.update({'model': model, 'model_config': config, 'train_func': train_func})
+
+    return Tuner(args, search_dict=exp_dict[args.exp_name])
 
 
 def iter_time_estimate(prefix, postfix, start_time, iters_finished, total_iters):
@@ -198,8 +222,12 @@ def summarize_by_folder(dataset, model, metric=EVAL_METRIC):
     '''
     model_res_path = f'{RES_PATH}{model}/{dataset}/'
     print(f'Summarizing--------{model_res_path}')
-    f_list = os.listdir(model_res_path)
-    print(f_list)
+    try:
+        f_list = os.listdir(model_res_path)
+        print(f_list)
+    except FileNotFoundError:
+        print(f'No such folder, skipped!!')
+        return
     for train_percentage in f_list:
         if ('.' not in train_percentage) and len(train_percentage) > 0 and train_percentage != 'debug':
             print(f'Summarizing expriment{train_percentage}')
@@ -246,6 +274,7 @@ def res_to_excel(res_f_list, out_prefix, metric):
                     print(f'!!!!File {f.name} is not summarized, skipped!!!!')
                     continue
                 sum_dict.pop('_interested_conf_list', None)
+                conf_dict.pop('_interested_conf_list', None)
 
                 sum_dict['config2str'] = conf_dict
                 sum_res_list.append(sum_dict)
