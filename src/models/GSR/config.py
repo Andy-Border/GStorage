@@ -37,7 +37,7 @@ class GSRConfig(ModelConfig):
         self.pre_dropout = 0
 
         # ! Graph Refinement Settings
-        self.cos_batch_size = 2000 if self.dataset == 'arxiv' else 10000
+        self.cos_batch_size = 4000 if self.dataset == 'arxiv' else 10000
 
         # self.fsim_norm = False  #
         self.fsim_norm = True

@@ -7,7 +7,6 @@ from itertools import combinations
 import torch.nn as nn
 import os
 from utils.data_utils import *
-from utils.debug_utils import *
 import utils.util_funcs as uf
 from models.GSR.config import GSRConfig
 from utils.data_utils import *
@@ -48,7 +47,7 @@ class GSR_pretrain(nn.Module):
             # GCN emb should not be dropped out
             return TwoLayerGCN(input_dim, cf.n_hidden, cf.n_hidden, cf.activation, cf.pre_dropout, is_out_layer=True)
         if cf.gnn_model == 'GAT':
-            return TwoLayerGAT(input_dim, cf.gat_hidden, cf.gat_hidden, cf.in_head, cf.prt_out_head, cf.activation, cf.pre_dropout, cf.pre_dropout,  is_out_layer=True)
+            return TwoLayerGAT(input_dim, cf.gat_hidden, cf.gat_hidden, cf.in_head, cf.in_head, cf.activation, cf.pre_dropout, cf.pre_dropout,  is_out_layer=True)
         if cf.gnn_model == 'GraphSage':
             return TwoLayerGraphSage(input_dim, cf.n_hidden, cf.n_hidden, cf.aggregator, cf.activation, cf.pre_dropout, is_out_layer=True)
 

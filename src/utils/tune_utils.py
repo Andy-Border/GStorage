@@ -27,9 +27,9 @@ class Tuner():
         self._d = deepcopy(default_dict) if default_dict is not None else {}
         if 'data_spec_configs' in search_dict:
             self.update_data_specific_cand_dict(search_dict['data_spec_configs'])
-        search_dict.pop('data_spec_configs', None)
-
         self._d.update(search_dict)
+        self._d.pop('data_spec_configs', None)
+
 
     def update_data_specific_cand_dict(self, cand_dict):
         for k, v in cand_dict.items():
@@ -64,7 +64,7 @@ class Tuner():
         return pd.DataFrame.from_records(dict_product(self._d))
 
     # * ============================= Tuning =============================
-
+    'temp_results/GSR/citeseer/l00/l0_PR-_lr0.001_bsz256_pi200_encGAT_dec-l2_hidden48-prt_intra_w-0.0_ncek16382_fanout20_40_prdo0_act_Elu_d64_pss500-_GR-fsim_norm1_fsim_weight0.0_add0.25_rm0.0_lr0.01_GCN-do0.5.txt'=='temp_results/GSR/citeseer/l00/l0_PR-_lr0.001_bsz256_pi200_encGAT_dec-l2_hidden48-prt_intra_w-0.0_ncek16382_fanout10_20_prdo0_act_Elu_d64_pss500-_GR-fsim_norm1_fsim_weight0.0_add0.0_rm0.0_lr0.01_GCN-do0.5.txt'
     @time_logger
     def grid_search(self):
         print(self)

@@ -9,7 +9,7 @@ from models.GSR.tuneGSR import EXP_DICT
 
 DATASETS = ['cora', 'citeseer', 'blogcatalog', 'airport', 'flickr', 'arxiv']
 EXP_LIST = ['RoughTuneGCN', 'RoughTuneGAT', 'RoughTuneGraphSage']
-TRAIN_RATIOS = [0, 1, 3, 5]
+TRAIN_RATIOS = [0]
 
 MODELS = [('GSR', GSRConfig, train_GSR)]
 

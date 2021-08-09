@@ -7,10 +7,6 @@ from utils import *
 import argparse
 import numpy as np
 
-rm_ratio_list = [0, 0.05, 0.1, 0.2, 0.4, 0.6]
-rm_ratio_list = [0, 0.2, 0.4, 0.6]
-add_ratio_list = [0, 1.0, 2.0]
-add_ratio_list = [0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0]
 zero_to_one_rough_list = [0, 0.25, 0.5, 0.75, 1.0]
 zero_to_half_rough_list = [0, 0.25, 0.5]
 small_list = [0, 0.25, 0.5]
@@ -44,37 +40,88 @@ RoughDict = {
             'arxiv': '5_10',
         },
         'add_ratio': {
-            'cora': zero_to_one_rough_list,  # 5
-            'citeseer': zero_to_one_rough_list,  # 5
-            'airport': zero_to_one_rough_list,  # 4
-            'blogcatalog': [0, 0.5],
-            'flickr': [0, 0.5],
-            'arxiv': [0.0, 0.1, 0.2],
-
+            'cora': zero_to_one_fine_list,  # 5
+            'citeseer': zero_to_one_fine_list,  # 5
+            'airport': zero_to_one_fine_list,  # 4
+            'blogcatalog': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'flickr': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'arxiv': [0.0, 0.1, 0.2, 0.3],
         },
         'rm_ratio': {
             'cora': [0.0],  # 2
             'citeseer': [0.0],
-            'airport': [0.0, 0.25],
-            'blogcatalog': [0.0, 0.1, 0.2],
-            'flickr': [0.0, 0.1, 0.2],
-            'arxiv': [0.0, 0.1],
+            'airport': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'blogcatalog': [0.0, 0.1, 0.2, 0.3],
+            'flickr': [0.0, 0.1, 0.2, 0.3],
+            'arxiv': [0.0, 0.05, 0.1],
         },
         'p_epochs': {
-            'cora': [100, 10, 50],
-            'citeseer': [200, 50, 100],
-            'airport': [100, 10, 50],
-            'blogcatalog': [3, 1],
-            'flickr': [3, 1],
-            'arxiv': [2, 1]
+            'cora': [10, 20, 30, 40, 50, 100],
+            'citeseer': [10, 50, 100, 150, 200],
+            'airport': [10, 20, 30, 40, 50, 100],
+            'blogcatalog': [1, 2, 3],
+            'flickr': [1, 2, 3],
+            'arxiv': [1, 2]
+        },
+    },
+}
+
+FineDict = {
+    'semb': 'dw',
+    'fsim_weight': zero_to_one_fine_list,  # 5
+    'intra_weight': zero_to_one_rough_list,  # 5
+    'fsim_norm': True,
+    'stochastic_trainer': False,
+    'activation': ['Elu'],
+    'p_schedule_step': [0, 100, 250, 500, 1000],
+    'data_spec_configs': {
+        'fan_out': {
+            'cora': '20_40',
+            'citeseer': '1_2',
+            'airport': '5_10',
+            'blogcatalog': '15_30',
+            'flickr': '15_30',
+            'arxiv': '5_10',
+        },
+        'add_ratio': {
+            'cora': zero_to_one_fine_list,  # 5
+            'citeseer': zero_to_one_fine_list + [1.1, 1.2, 1.3, 1.4, 1.5],  # 5
+            'airport': zero_to_one_fine_list + [1.1, 1.2, 1.3, 1.4, 1.5],
+            'blogcatalog': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'flickr': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'arxiv': [0.0, 0.1, 0.2, 0.3],
+        },
+        'p_epochs': {
+            'cora': [10, 20, 30, 40, 50, 100],  # 2
+            'citeseer': [10, 50, 100, 150, 200, 250, 300],  # 4
+            'airport': [10, 20, 30, 40, 50, 100],
+            'blogcatalog': [1, 3, 5],
+            'flickr': [1, 3, 5],
+            'arxiv': [1, 2, 3]
+        },
+        'rm_ratio': {
+            'cora': [0.0],
+            'citeseer': [0.0],
+            'airport': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'blogcatalog': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'flickr': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            'arxiv': [0.0, 0.05, 0.1, 0.2],
+        },
+        'p_batch_size': {
+            'cora': [128, 256, 512],
+            'citeseer': [128, 256, 512],
+            'airport': [128, 256, 512],
+            'blogcatalog': [128, 256, 512],
+            'flickr': [128, 256, 512],
+            'arxiv': [512, 1024, 2048],
         },
     },
 }
 
 EXP_DICT = {
-    'RoughTuneGCN': {'gnn_type': 'GCN', **RoughDict},
-    'RoughTuneGAT': {'gnn_type': 'GAT', **RoughDict},
-    'RoughTuneGraphSage': {'gnn_type': 'GraphSage', **RoughDict},
+    'RoughTuneGCN': {'gnn_model': 'GCN', **RoughDict},
+    'RoughTuneGAT': {'gnn_model': 'GAT', **RoughDict},
+    'RoughTuneGraphSage': {'gnn_model': 'GraphSage', **RoughDict},
     'Test': {
         'fsim_weight': zero_to_one_rough_list,  # 5        ,
         'data_spec_configs': {
