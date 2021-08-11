@@ -6,7 +6,7 @@ TEMP_PATH = 'temp/'
 DATA_PATH = 'data/'
 
 EVAL_METRIC = 'test_acc'
-P_EPOCHS_SAVE_LIST = [1, 2, 3, 5, 10, 20, 30, 40, 50, 100, 150, 200, 250, 300]
+P_EPOCHS_SAVE_LIST = [10, 20, 30, 40, 50, 75, 100, 150, 200, 300]
 
 PARA_DICT = {
     'intra_weight': {

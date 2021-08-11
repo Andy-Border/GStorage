@@ -37,7 +37,7 @@ class GSRConfig(ModelConfig):
         self.pre_dropout = 0
 
         # ! Graph Refinement Settings
-        self.cos_batch_size = 4000 if self.dataset == 'arxiv' else 10000
+        self.cos_batch_size = 1800 if self.dataset == 'arxiv' else 10000
 
         # self.fsim_norm = False  #
         self.fsim_norm = True
@@ -68,8 +68,8 @@ class GSRConfig(ModelConfig):
                 self.in_head = 8
                 self.gat_hidden = 8
             else:
-                self.in_head = 3
-                self.gat_hidden = 250
+                self.in_head = 8
+                self.gat_hidden = 32
                 self.input_dropout = 0.1
 
         if self.gnn_model == 'GraphSage':

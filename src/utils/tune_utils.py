@@ -30,7 +30,6 @@ class Tuner():
         self._d.update(search_dict)
         self._d.pop('data_spec_configs', None)
 
-
     def update_data_specific_cand_dict(self, cand_dict):
         for k, v in cand_dict.items():
             self._d.update({k: v[self.dataset]})
@@ -63,18 +62,21 @@ class Tuner():
                 self._d[para] = [self._d[para]]
         return pd.DataFrame.from_records(dict_product(self._d))
 
-    # * ============================= Tuning =============================
-    'temp_results/GSR/citeseer/l00/l0_PR-_lr0.001_bsz256_pi200_encGAT_dec-l2_hidden48-prt_intra_w-0.0_ncek16382_fanout20_40_prdo0_act_Elu_d64_pss500-_GR-fsim_norm1_fsim_weight0.0_add0.25_rm0.0_lr0.01_GCN-do0.5.txt'=='temp_results/GSR/citeseer/l00/l0_PR-_lr0.001_bsz256_pi200_encGAT_dec-l2_hidden48-prt_intra_w-0.0_ncek16382_fanout10_20_prdo0_act_Elu_d64_pss500-_GR-fsim_norm1_fsim_weight0.0_add0.0_rm0.0_lr0.01_GCN-do0.5.txt'
     @time_logger
     def grid_search(self):
         print(self)
         failed_trials, skipped_trials = 0, 0
 
-        total_trials = len(self.tune_df) - self.start_ind
+        if self.start_point < 1:
+            start_ind = int(len(self.tune_df) * self.start_point)
+        else:
+            start_ind = int(self.start_point)
+
+        total_trials = len(self.tune_df) - start_ind
         finished_trials = 0
         outer_start_time = time.time()
         tune_dict = self.tune_df.to_dict('records')
-        for i in range(self.start_ind, len(self.tune_df)):
+        for i in range(start_ind, len(self.tune_df)):
             ind = len(self.tune_df) - i - 1 if self.reverse_iter else i
             para_dict = deepcopy(self.trial_cf)
             para_dict.update(tune_dict[ind])
@@ -152,7 +154,7 @@ def tuner_from_argparse_args(model, config, train_func, exp_dict,
     parser.add_argument('-t', '--train_percentage', type=int, default=train_percentage)
     parser.add_argument('-r', '--run_times', type=int, default=run_times)
     parser.add_argument('-e', '--exp_name', type=str, default=exp_name)
-    parser.add_argument('-s', '--start_ind', type=int, default=0)
+    parser.add_argument('-s', '--start_point', type=float, default=0)
     parser.add_argument('-g', '--gpu', type=int, default=1)
     parser.add_argument('-v', '--reverse_iter', action='store_true', help='reverse iter or not')
     parser.add_argument('-b', '--log_on', action='store_true', help='show log or not')

@@ -7,42 +7,40 @@
 
 
 # G1 - g4-6
-# tu1 -dciteseer -t0 -eRoughTune -r3 -oGCN;
-# tu1 -dciteseer -t0 -eRoughTune -r3 -oGAT;
-# tu1 -dciteseer -t0 -eRoughTune -r3 -oGraphSage;
+tu1 -dciteseer -t0 -eRoughTune -r3 -oGCN;
+tu1 -dciteseer -t0 -eRoughTune -r3 -oGAT;
+tu1 -dciteseer -t0 -eRoughTune -r3 -oGraphSage;
 
 # G2 - g7-g9
-# tu2 -dairport -t0 -eRoughTune -r3 -oGCN;
-# tu2 -dairport -t0 -eRoughTune -r3 -oGAT;
-# tu2 -dairport -t0 -eRoughTune -r3 -oGraphSage;
+tu2 -dairport -t0 -eRoughTune -r3 -oGCN;
+tu2 -dairport -t0 -eRoughTune -r3 -oGAT;
+tu2 -dairport -t0 -eRoughTune -r3 -oGraphSage;
 
 # G3 - g10-g12
-# tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGCN;
-# tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGAT;
-# tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGraphSage;
+tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGCN;
+tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGAT;
+tu3 -dblogcatalog -t0 -eRoughTune -r3 -oGraphSage;
 
 # G4 - g13-g15
-# tu4 -dflickr -t0 -eRoughTune -r3 -oGCN;
-# tu4 -dflickr -t0 -eRoughTune -r3 -oGAT;
-# tu4 -dflickr -t0 -eRoughTune -r3 -oGraphSage;
+tu4 -dflickr -t0 -eRoughTune -r3 -oGCN;
+tu4 -dflickr -t0 -eRoughTune -r3 -oGAT;
+tu4 -dflickr -t0 -eRoughTune -r3 -oGraphSage;
 
 # G5 - g16-g18
-# tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGCN -v;
-# tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGAT -v;
-# tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGraphSage -v;
+tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGCN -v;
+tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGAT -v;
+tu5 -dblogcatalog -t0 -eRoughTune -r3 -oGraphSage -v;
 
 # G6 - g19-21
-# tu6 -dflickr -t0 -eRoughTune -r3 -oGCN -v;
-# tu6 -dflickr -t0 -eRoughTune -r3 -oGAT -v;
-# tu6 -dflickr -t0 -eRoughTune -r3 -oGraphSage -v;
+tu6 -dflickr -t0 -eRoughTune -r3 -oGCN -v;
+tu6 -dflickr -t0 -eRoughTune -r3 -oGAT -v;
+tu6 -dflickr -t0 -eRoughTune -r3 -oGraphSage -v;
 
 # G7 - g22-g24
-# tu7 -darxiv -t0 -eRoughTune -r3 -oGCN;
-# tu7 -darxiv -t0 -eRoughTune -r3 -oGCN -v;
-
-
-# tu7 -darxiv -t0 -eRoughTune -oGraphSage -r3 -v;
-# tu7 -darxiv -t0 -eRoughTune -r3 -oGAT -v;
+tu7 -darxiv -t0 -eRoughTune -r3 -oGCN;
+tu7 -darxiv -t0 -eRoughTune -r3 -oGCN -v;
+tu7 -darxiv -t0 -eRoughTune -oGraphSage -r3 -v;
+tu7 -darxiv -t0 -eRoughTune -r3 -oGAT -v;
 
 
 # tu0 -darxiv -t0 -eRoughTune -oGAT;
@@ -61,7 +59,6 @@ tu3 -darxiv -t0 -eRoughTuneGraphSage -r3 -v;
 
 # g5-7
 tu4 -dcora -t0 -eRoughTuneGAT -r3; tu4 -dflickr -t0 -eRoughTuneGraphSage -r3 -v;
-
 tu4 -dcora -t0 -eRoughTuneGraphSage -r3;tu4 -dblogcatalog -t0 -eRoughTuneGAT -r3 -v;
 tu4 -dciteseer -t0 -eRoughTuneGAT -r3;
 
@@ -76,3 +73,119 @@ tu6 -dblogcatalog -t0 -eRoughTuneGraphSage -r3;
 
 # g13-14
 tu7 -dflickr -t0 -eRoughTuneGAT -r3;
+tu6 -dflickr -t0 -eRoughTuneGraphSage -r3;
+
+tu4 -dairport -t0 -eRoughTuneGAT -r3 -v;
+tu6 -dairport -t0 -eRoughTuneGraphSage -r3 -v;
+tu7 -dblogcatalog -t0 -eRoughTuneGraphSage -r3 -v;
+
+
+########################Aug 08 GNN backbone##########################
+
+# g1-4 Arxiv
+
+tu0 -darxiv -t0 -eRoughTuneGAT -r3;
+tu1 -darxiv -t0 -eRoughTuneGraphSage -r3;
+tu2 -darxiv -t0 -eRoughTuneGAT -r3 -v;
+tu3 -darxiv -t0 -eRoughTuneGraphSage -r3 -v;
+
+# g5-7
+tu4 -dcora -t0 -eRoughTuneGAT -r3; tu4 -dflickr -t0 -eRoughTuneGraphSage -r3 -v;
+tu4 -dcora -t0 -eRoughTuneGraphSage -r3;tu4 -dblogcatalog -t0 -eRoughTuneGAT -r3 -v;
+tu4 -dciteseer -t0 -eRoughTuneGAT -r3;
+
+# g8-10
+tu5 -dciteseer -t0 -eRoughTuneGraphSage -r3;tu5 -dflickr -t0 -eRoughTuneGAT -r3 -v;
+tu5 -dairport -t0 -eRoughTuneGAT -r3; tu5 -dblogcatalog -t0 -eRoughTuneGraphSage -r3 -v;
+tu5 -dairport -t0 -eRoughTuneGraphSage -r3;
+
+# g11-12
+tu6 -dblogcatalog -t0 -eRoughTuneGAT -r3;
+tu6 -dblogcatalog -t0 -eRoughTuneGraphSage -r3;
+
+# g13-14
+tu7 -dflickr -t0 -eRoughTuneGAT -r3;
+tu6 -dflickr -t0 -eRoughTuneGraphSage -r3;
+
+tu4 -dairport -t0 -eRoughTuneGAT -r3 -v;
+tu6 -dairport -t0 -eRoughTuneGraphSage -r3 -v;
+tu7 -dblogcatalog -t0 -eRoughTuneGraphSage -r3 -v;
+
+
+
+
+########################################################################
+########################Aug 11 Final Finetune ##########################
+########################################################################
+
+Arxiv 3 g0,1,2,3
+Cora+Citeseer+Airport g4,g5
+Blog+Flickr g6, g7
+
+
+<<<<<<<<  Arxiv g0, g1, g2, g3 >>>>>>>>
+# g1~g3 Forward
+tu0 -darxiv -t0 -eFineTuneGAT -r5;
+tu0 -darxiv -t0 -eFineTuneGraphSage -r5;
+tu0 -darxiv -t0 -eFineTuneGCN -r5;
+
+# g4~g6 Backward
+tu1 -darxiv -t0 -eFineTuneGCN -r5 -v;
+tu1 -darxiv -t0 -eFineTuneGAT -r5 -v;
+tu1 -darxiv -t0 -eFineTuneGraphSage -r5 -v;
+
+# g7~9 Forward 1/4
+tu2 -darxiv -t0 -eFineTuneGAT -r5 -s0.25;
+tu2 -darxiv -t0 -eFineTuneGraphSage -r5 -s0.25;
+tu2 -darxiv -t0 -eFineTuneGCN -r5 -s0.25;
+
+# g10~g12 Backward 1/4
+tu3 -darxiv -t0 -eFineTuneGCN -r5 -v -s0.25;
+tu3 -darxiv -t0 -eFineTuneGAT -r5 -v -s0.25;
+tu3 -darxiv -t0 -eFineTuneGraphSage -r5 -v -s0.25;
+
+<<<<<<<<  Cora+ Citeseer: g4,g5 >>>>>>>>
+
+# g13~g18 Cora
+tu4 -dcora -t0 -eFineTuneGCN -r5;
+tu4 -dcora -t0 -eFineTuneGAT -r5;
+tu4 -dcora -t0 -eFineTuneGraphSage -r5;
+tu5 -dcora -t0 -eFineTuneGCN -r5 -v;
+tu5 -dcora -t0 -eFineTuneGAT -r5 -v;
+tu5 -dcora -t0 -eFineTuneGraphSage -r5 -v;
+
+# g19~g24 Citeseer
+tu4 -dciteseer -t0 -eFineTuneGCN -r5;
+tu4 -dciteseer -t0 -eFineTuneGAT -r5;
+tu4 -dciteseer -t0 -eFineTuneGraphSage -r5;
+tu5 -dciteseer -t0 -eFineTuneGCN -r5 -v;
+tu5 -dciteseer -t0 -eFineTuneGAT -r5 -v;
+tu5 -dciteseer -t0 -eFineTuneGraphSage -r5 -v;
+
+<<<<<<<<  Blog+ Flickr: g6,g7 >>>>>>>>
+# g25~g30 Blogcatalog
+tu6 -dblogcatalog -t0 -eFineTuneGCN -r5;
+tu6 -dblogcatalog -t0 -eFineTuneGAT -r5;
+tu6 -dblogcatalog -t0 -eFineTuneGraphSage -r5;
+tu7 -dblogcatalog -t0 -eFineTuneGCN -r5 -v;
+tu7 -dblogcatalog -t0 -eFineTuneGAT -r5 -v;
+tu7 -dblogcatalog -t0 -eFineTuneGraphSage -r5 -v;
+
+# g31~g36 Flickr
+tu6 -dflickr -t0 -eFineTuneGCN -r5;
+tu6 -dflickr -t0 -eFineTuneGAT -r5;
+tu6 -dflickr -t0 -eFineTuneGraphSage -r5;
+tu7 -dflickr -t0 -eFineTuneGCN -r5 -v;
+tu7 -dflickr -t0 -eFineTuneGAT -r5 -v;
+tu7 -dflickr -t0 -eFineTuneGraphSage -r5 -v;
+
+<<<<<<<<  Airport: Misc >>>>>>>>
+
+# g37~g42 Airport
+tu4 -dairport -t0 -eFineTuneGraphSage -r5;
+tu5 -dairport -t0 -eFineTuneGCN -r5;
+tu6 -dairport -t0 -eFineTuneGAT -r5;
+tu7 -dairport -t0 -eFineTuneGraphSage -r5 -v;
+tu4 -dairport -t0 -eFineTuneGCN -r5 -v;
+tu5 -dairport -t0 -eFineTuneGAT -r5 -v;
+
